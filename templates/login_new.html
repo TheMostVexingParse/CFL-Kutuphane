@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <title>Kütüphane</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+    <style>
+		html, body {
+		  height: 100%;
+		  overflow: hidden;
+		}
+		
+		.search-box {
+            width: 75%;
+            height: 30px;
+            padding: 5px 10px;
+            font-size: 16px;
+            border: 2px solid #1E90FF;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #00BFFF;
+        }
+        
+        .search-results {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+        
+        .search-results li {
+            padding: 5px 10px;
+            border-bottom: 1px solid #1E90FF;
+            font-size: 12px;
+        }
+        
+        .search-results li:last-child {
+            border-bottom: none;
+        }
+        
+        .search-results li:hover {
+            background-color: #F0F8FF;
+        }
+
+		body {
+		  background-color: white;
+		  font-family: Arial, sans-serif;
+		}
+
+		.topnav-main {
+		  background-color: #1E90FF;
+		  height: 50px;
+		  display: flex;
+		  align-items: center;
+		  padding: 0 90%;
+		  margin: 0;
+		}
+
+		.topnav-main ul {
+		  margin: 10;
+		  padding: 0;
+		  list-style: none;
+		  display: flex;
+		  float: right;
+		}
+
+		.topnav-main ul li {
+		  margin: 0 10px;
+		}
+
+		.topnav-main ul li a {
+		  color: #fff;
+		  text-decoration: none;
+		  padding: 5px 10px;
+		  border-radius: 5px;
+		  transition: background-color 0.3s ease;
+		}
+
+
+		.topnav-main .active {
+		  background-color: #F0F8FF;
+		  color: #1E90FF;
+		}
+
+
+		.dropdown {
+		  position: relative;
+		  display: inline-block;
+		  
+		}
+
+		.dropdown-content {
+
+		  display: none;
+		  position: absolute;
+		  min-width: 160px;
+		  z-index: 1;
+		  border-radius: 10px;
+		  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+		}
+
+		.dropdown-content a {
+		  color: black;
+		  padding: 12px 16px;
+		  text-decoration: none;
+		  display: block;
+		}
+		
+		.dropdown-content a:hover {
+		  background-color: #47eafc;
+		  padding: 12px 16px;
+		  text-decoration: none;
+		  display: block;
+		  border-radius: 10px;
+		}
+
+		.dropdown:hover .dropdown-content {
+		  display: block;
+		}
+        
+        
+    </style>
+</head>
+<body>
+	<center>
+		<img src="./static/logo.jpeg" width="300" height="45"></img>
+	</center>
+	<div class="topnav-main">
+        <div class="topnav-right">
+            <div class="dropdown">
+              <label onclick="launch()" class="dropbtn"><p allign="right">usernmae</p></label>
+              <div id="myDropdown" class="dropdown-content">
+                <a href="#">Profilim</a>
+                <a href="#">Okuduğum Kitaplar</a>
+                <a href="#">Kitap Keşfet</a>
+                <a href="/upload">Kitap Yükle</a>
+              </div>
+            </div>
+        </div>
+	</div>
+    <div class="container">
+        <input type="text" id="livebox" class="search-box" placeholder="Type here to search...">
+        <div id="datalist" class="search-results"></div>
+    </div>
+</body>
+<script>
+	function launch() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+        
+        window.onclick = function(event) {
+          if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+              var openDropdown = dropdowns[i];
+              if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+              }
+            }
+          }
+        }
+		
+	function doAjax() {
+				$("#datalist").empty();
+				$.ajax({
+					method:"post",
+					url:"/livesearch",
+					data:{text:$("#livebox").val()},
+					success:function(res){
+						
+						var data = "<ul class='search-results'>";
+						$.each(res,function(index,value){
+							data += "<li>"+value.search_result+"</li>";
+						});
+						data += "</ul>";
+						$("#datalist").html(data);
+					}
+				});
+			}
+			
+    $(document).ready(function(){
+        $("#livebox").on("focus keyup",function(e){
+			console.log(e.which);
+			if (e.which != 0 && (e.which > 40 || e.which < 37)) {
+				if (e.which != 8) { setTimeout(doAjax, 20); }
+				else { setTimeout(doAjax, 200); }
+			}
+        });
+    });
+	
+	doAjax();
+</script>
+</html>

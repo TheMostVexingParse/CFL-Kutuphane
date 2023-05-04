@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0"/>
+		<style>
+
+			body {
+			  font-family: Arial, Helvetica, sans-serif;
+			  background-color: #E8F2F7;
+			  overflow-y: hidden; 
+			  overflow-x: hidden;
+			  }
+			  
+			  
+			h2 {
+			  text-align: center;
+			  color: #1E3C72;
+			  margin-top: 50px;
+			}
+			
+
+			
+
+			button:hover {
+			  opacity: 0.8;
+			}
+
+			.container {
+			  padding: 16px;
+			}
+
+			@media screen and (orientation: landscape) {
+				form {
+					border: 3px solid #1E3C72;
+					width: 40%;
+					margin: 80px auto;
+					background-color: #FFFFFF;
+					border-radius: 5px;
+					padding: 30px;
+				}
+				p {
+					text-align: right;
+				}
+				
+				input[type=text], input[type=password] {
+					width: 100%;
+					padding: 12px 20px;
+					margin: 8px 0;
+					display: inline-block;
+					border: 1px solid #ccc;
+					box-sizing: border-box;
+					border-radius: 5px;
+					font-size: 16px;
+				}
+				
+				button {
+					background-color: #1E3C72;
+					color: white;
+					padding: 14px 20px;
+					margin: 8px 0;
+					border: none;
+					cursor: pointer;
+					width: 100%;
+					border-radius: 5px;
+					font-size: 16px;
+				}
+			
+			}
+			
+			@media screen and (orientation: portrait) {
+				form {
+					border: 3px solid #1E3C72;
+					width: 70%;
+					margin: 50px auto;
+					background-color: #FFFFFF;
+					border-radius: 5px;
+					padding: 30px;
+				}
+				p {
+					text-align: right;
+					font-size: 12px;
+				}
+				
+				input[type=text], input[type=password] {
+					width: 120%;
+					padding: 12px 20px;
+					margin: 8px -20px;
+					display: inline-block;
+					border: 1px solid #ccc;
+					box-sizing: border-box;
+					border-radius: 5px;
+					font-size: 16px;
+				}
+				
+				label {
+					margin: 0 -20px;
+				}
+				
+				button {
+					background-color: #1E3C72;
+					color: white;
+					padding: 14px 20px;
+					margin: 8px -20px;
+					border: none;
+					cursor: pointer;
+					width: 120%;
+					border-radius: 5px;
+					font-size: 16px;
+				}
+			}
+			
+			
+			
+		</style>
+	</head>
+	<body>
+
+	<h2>Welcome to the Online Library</h2>
+
+	<form action="/login_process" method="post">
+
+	  <div class="container">
+		<label for="uname"><b>Username</b></label>
+		<input type="text" placeholder="Enter Username" name="uname" required>
+
+		<label for="psw"><b>Password</b></label>
+		<input type="password" placeholder="Enter Password" name="psw" required>
+			
+		<button type="submit">Login</button>
+		<br>
+		<br>
+		<p>Hesabınız yok mu? <a href="/signup">Kayıt olun</a></p>
+	  </div>
+
+	</form>
+
+	</body>
+</html>
